@@ -1106,9 +1106,10 @@ function test_Banded()
         @test bm == bm2
 
         buffer = IOBuffer()
-        io = IOContext(buffer)
-        dump(io, bm, 1, "")
-        @test occursin("BandedMatrix", String(take!(buffer)))
+        show(IOContext(buffer, :limit => true), MIME"text/plain"(), bm)
+        shown = String(take!(buffer))
+        @test occursin("BandedMatrix", shown)
+        @test occursin("5×4", shown)
     end
 end
 

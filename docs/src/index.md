@@ -1,3 +1,7 @@
+```@meta
+CurrentModule = ODEInterface
+```
+
 # ODEInterface.jl
 
 `ODEInterface.jl` provides direct Julia wrappers around the supported Fortran
@@ -15,8 +19,11 @@ Each solver accepts `rhs`, an initial and final time, an initial state, and an
 `OptionsODE` object. The right-hand side below uses the default return-array
 calling convention.
 
+The names below are `public`, not exported, so bring in the ones you need
+explicitly (or reach them as `ODEInterface.dopri5`).
+
 ```jldoctest
-julia> using ODEInterface
+julia> using ODEInterface: OptionsODE, dopri5
 
 julia> rhs(t, u) = u;
 

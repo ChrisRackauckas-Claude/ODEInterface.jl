@@ -19,6 +19,13 @@
         :ddebdf,
     )
 
-    @test all(name -> Base.isexported(ODEInterface, name), public_names)
+    @test all(name -> isdefined(ODEInterface, name), public_names)
     @test all(name -> haskey(Docs.meta(ODEInterface), Docs.Binding(ODEInterface, name)), public_names)
+
+    # `public` only exists from Julia 1.11 on; see the declaration in
+    # src/ODEInterface.jl.
+    @static if VERSION ≥ v"1.11"
+        @test all(name -> Base.ispublic(ODEInterface, name), public_names)
+        @test !any(name -> Base.isexported(ODEInterface, name), public_names)
+    end
 end

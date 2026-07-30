@@ -9,6 +9,6 @@ makedocs(;
     modules = [ODEInterface],
     sitename = "ODEInterface.jl",
     repo = "github.com/luchr/ODEInterface.jl",
-    checkdocs = :exports,
+    checkdocs = :public,
     pages = ["Public API" => "index.md"],
 )

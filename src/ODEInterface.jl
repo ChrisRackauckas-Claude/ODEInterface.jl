@@ -621,10 +621,22 @@ function __init__()
     return empty!(dlSolversInfo)
 end
 
-export OptionsODE, RHS_CALL_INSITU, OUTPUTFCN_CALL_REASON, OUTPUTFCN_CALL_STEP,
-    OUTPUTFCN_WODENSE, OUTPUTFCN_DENSE, OUTPUTFCN_RET_CONTINUE,
-    OUTPUTFCN_RET_CONTINUE_XCHANGED, dopri5, dop853, odex, seulex, radau, radau5,
-    rodas, ddeabm, ddebdf
+# `public` needs the Julia 1.11 parser, so while 1.10 is supported the
+# declaration cannot be written literally here. On 1.10 the names carry no
+# public marker, but they are reachable the same way
+# (`ODEInterface.dopri5`, `using ODEInterface: dopri5`).
+@static if VERSION ≥ v"1.11"
+    include_string(
+        @__MODULE__,
+        """
+        public OptionsODE, RHS_CALL_INSITU, OUTPUTFCN_CALL_REASON,
+            OUTPUTFCN_CALL_STEP, OUTPUTFCN_WODENSE, OUTPUTFCN_DENSE,
+            OUTPUTFCN_RET_CONTINUE, OUTPUTFCN_RET_CONTINUE_XCHANGED,
+            dopri5, dop853, odex, seulex, radau, radau5, rodas, ddeabm,
+            ddebdf
+        """
+    )
+end
 
 end
 
