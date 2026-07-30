@@ -20,5 +20,5 @@
     )
 
     @test all(name -> Base.isexported(ODEInterface, name), public_names)
-    @test all(name -> Docs.hasdoc(ODEInterface, name), public_names)
+    @test all(name -> haskey(Docs.meta(ODEInterface), Docs.Binding(ODEInterface, name)), public_names)
 end
