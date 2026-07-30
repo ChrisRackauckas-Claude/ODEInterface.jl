@@ -465,13 +465,17 @@ function full(bm::BandedMatrix{T}) where {T}
     return fullToArray(bm, Array{T}(undef, (bm.m, size(bm.entries, 2))))
 end
 
-function dump(io::IO, bm::BandedMatrix, n::Integer, indent)
+function _dump_banded(io::IO, bm::BandedMatrix, n::Integer, indent)
     println(io, typeof(bm), " ", bm.m, "×", bm.n, "; l=", bm.l, " and u=", bm.u)
     return if n > 0
         print(io, indent, "  entries in diagonals ")
         dump(io, bm.entries, n - 1, string(indent, "  "))
     end
 end
+
+dump(io::IO, bm::BandedMatrix, n::Integer, indent) = _dump_banded(io, bm, n, indent)
+
+dump(io::IOContext, bm::BandedMatrix, n::Int, indent) = _dump_banded(io, bm, n, indent)
 
 
 # vim:syn=julia:cc=79:fdm=indent:

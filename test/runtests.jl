@@ -1104,6 +1104,11 @@ function test_Banded()
         setdiagonals!(bm2, bm)
         @test bm ≢ bm2
         @test bm == bm2
+
+        buffer = IOBuffer()
+        io = IOContext(buffer)
+        dump(io, bm, 1, "")
+        @test occursin("BandedMatrix", String(take!(buffer)))
     end
 end
 
@@ -1250,6 +1255,8 @@ function test_all()
 end
 
 test_all()
+
+include("public_api_tests.jl")
 
 end
 
