@@ -18,7 +18,7 @@ The ancestor for all wrapped exceptions in ODEInterface.
 
 Required fields: msg, error
 """
-abstract type WrappedODEException <: Exception end
+abstract type WrappedODEException <: Base.WrappedException end
 
 function showerror(io::IO, e::WrappedODEException)
     println(io, e.msg)

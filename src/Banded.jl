@@ -1,7 +1,7 @@
 # Functions and types for banded matrices
 
 import Base: setindex!, getindex
-import Base: hash, size, ==, isequal, fill!, convert
+import Base: dump, hash, size, ==, isequal, fill!, convert
 
 """macro, for importing Banded Matrix types."""
 macro import_bandedmatrix()
@@ -463,6 +463,14 @@ For banded matrices: generate and return full/dense matrix.
 """
 function full(bm::BandedMatrix{T}) where {T}
     return fullToArray(bm, Array{T}(undef, (bm.m, size(bm.entries, 2))))
+end
+
+function dump(io::IO, bm::BandedMatrix, n::Integer, indent)
+    println(io, typeof(bm), " ", bm.m, "×", bm.n, "; l=", bm.l, " and u=", bm.u)
+    return if n > 0
+        print(io, indent, "  entries in diagonals ")
+        dump(io, bm.entries, n - 1, string(indent, "  "))
+    end
 end
 
 
